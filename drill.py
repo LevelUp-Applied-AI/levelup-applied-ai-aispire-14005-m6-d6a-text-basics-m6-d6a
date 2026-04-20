@@ -30,7 +30,8 @@ def preprocess_text(text, stop_words):
     """
     # TODO: Lowercase the text, tokenize with spaCy, filter out
     #       punctuation tokens and stop words
-    pass
+    doc = nlp(text.lower())
+    return [token.text for token in doc if not token.is_punct and token.text not in stop_words]
 
 
 def extract_linguistic_annotations(text):
@@ -44,7 +45,8 @@ def extract_linguistic_annotations(text):
         token. Use spaCy's .text, .pos_, and .dep_ attributes.
     """
     # TODO: Process text with spaCy and build annotation tuples
-    pass
+    doc = nlp(text)
+    return [(token.text, token.pos_, token.dep_) for token in doc]
 
 
 def extract_entities(text):
@@ -59,7 +61,8 @@ def extract_entities(text):
         and .label_ attributes.
     """
     # TODO: Process text with spaCy and extract entity tuples
-    pass
+    doc = nlp(text)
+    return [(ent.text, ent.label_) for ent in doc.ents]
 
 
 if __name__ == "__main__":

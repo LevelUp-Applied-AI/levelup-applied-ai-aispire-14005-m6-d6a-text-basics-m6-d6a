@@ -13,10 +13,11 @@ This installs spaCy for the first time in this course and downloads the spaCy En
 
 ## Tasks
 
-Complete the three functions in `drill.py`:
+Complete the four functions in `drill.py`:
 1. `preprocess_text(text, stop_words)` — Tokenize with spaCy, drop punctuation/whitespace, lowercase, filter stop words
 2. `extract_linguistic_annotations(text)` — Extract (token, POS, dependency) tuples with spaCy
 3. `extract_entities(text)` — Extract named entities using spaCy Named Entity Recognition
+4. `split_into_sentences(text)` — Split text into sentences using spaCy's `doc.sents` segmenter
 
 ## Submission
 

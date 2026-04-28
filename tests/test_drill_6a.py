@@ -6,7 +6,8 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from drill import preprocess_text, extract_linguistic_annotations, extract_entities
+from drill import (preprocess_text, extract_linguistic_annotations,
+                   extract_entities, split_into_sentences)
 
 
 SAMPLE_TEXT = (
@@ -95,6 +96,34 @@ def test_extract_entities():
     assert any(term in all_entity_text for term in ["ipcc", "geneva", "jordan", "dubai", "march"]), (
         f"Expected at least one known entity. Found: {entity_texts}"
     )
+
+
+def test_split_into_sentences():
+    """Verify sentence segmentation returns the correct sentences in order."""
+    result = split_into_sentences(SAMPLE_TEXT)
+    assert result is not None, "split_into_sentences returned None"
+    assert isinstance(result, list), "Must return a list"
+    assert len(result) == 2, (
+        f"SAMPLE_TEXT contains 2 sentences; got {len(result)}"
+    )
+
+    for s in result:
+        assert isinstance(s, str), f"Each sentence must be a string, got {type(s)}"
+        assert s == s.strip(), f"Sentence has leading/trailing whitespace: {s!r}"
+
+    # First sentence should mention IPCC; second should mention COP28/Dubai
+    assert "ipcc" in result[0].lower(), f"First sentence missing IPCC: {result[0]!r}"
+    assert "cop28" in result[1].lower() or "dubai" in result[1].lower(), (
+        f"Second sentence missing COP28/Dubai: {result[1]!r}"
+    )
+
+
+def test_split_into_sentences_single():
+    """Single-sentence input should return a single-element list."""
+    result = split_into_sentences("The Paris Agreement was signed in 2015.")
+    assert result is not None
+    assert len(result) == 1
+    assert "paris agreement" in result[0].lower()
 
 
 def test_preprocess_handles_unicode():

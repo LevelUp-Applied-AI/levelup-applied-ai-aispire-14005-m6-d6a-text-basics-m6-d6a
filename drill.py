@@ -1,7 +1,7 @@
 """
 Module 6 Week A — Core Skills Drill: Text Processing & NLP Basics
 
-Complete the three functions below. Each function has a docstring
+Complete the four functions below. Each function has a docstring
 describing its inputs, outputs, and purpose.
 
 Run your work: python drill.py
@@ -63,6 +63,21 @@ def extract_entities(text):
     pass
 
 
+def split_into_sentences(text):
+    """Split a text into sentences using spaCy's sentence segmenter.
+
+    Args:
+        text: A text string that may contain multiple sentences.
+
+    Returns:
+        List of sentence strings, in order. Use spaCy's `doc.sents`
+        and each Span's `.text` attribute. Strip leading/trailing
+        whitespace from each sentence.
+    """
+    # TODO: Process text with spaCy and return [s.text.strip() for s in doc.sents]
+    pass
+
+
 if __name__ == "__main__":
     sample = (
         "The IPCC released its latest report in Geneva on March 20, 2024. "
@@ -89,3 +104,10 @@ if __name__ == "__main__":
         print(f"\nEntities ({len(entities)}):")
         for text, label in entities:
             print(f"  {text:25s} {label}")
+
+    # Task 4: Sentence segmentation
+    sentences = split_into_sentences(sample)
+    if sentences is not None:
+        print(f"\nSentences ({len(sentences)}):")
+        for i, s in enumerate(sentences, 1):
+            print(f"  [{i}] {s}")
